@@ -5,7 +5,7 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Car convention: X = width (left/right), Z = length (+ front / - rear), Y = height.
 const SECTIONS = [
-  { id: 'hero', pos: [6.8, 1.35, -0.6], look: [0, 0.75, 0.1] },
+  { id: 'hero', pos: [9.2, 1.5, -0.8], look: [0, 0.72, 0.1] },
   { id: 'engine', pos: [2.6, 1.3, -4.2], look: [0, 0.85, -1.6] },
   { id: 'performance', pos: [2.8, 1.15, 3.6], look: [0, 0.65, 1.3] },
   { id: 'brakes', pos: [-1.75, 0.52, 1.85], look: [-0.91, 0.4, 1.14] },
@@ -15,7 +15,7 @@ const SECTIONS = [
   { id: 'lightweight', pos: [3.2, 1.35, -1.0], look: [0.3, 0.8, -0.2] },
   { id: 'colors', pos: [3.4, 1.1, 1.0], look: [0.1, 0.7, 0.3] },
   { id: 'specs', pos: [5.8, 1.5, -1.2], look: [0.1, 0.78, -0.2] },
-  { id: 'final', pos: [6.8, 1.35, -0.6], look: [0, 0.75, 0.1] },
+  { id: 'final', pos: [9.2, 1.5, -0.8], look: [0, 0.72, 0.1] },
 ];
 
 const canvas = document.getElementById('webgl');
@@ -96,6 +96,7 @@ function startExperience() {
     smoothWheel: !REDUCED,
     syncTouch: false,
   });
+  window.__lenis = lenis;
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
