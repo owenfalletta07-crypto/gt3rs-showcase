@@ -439,6 +439,10 @@ a {
   margin-top: 0.6rem;
   color: rgba(242, 242, 242, 0.7);
 }
+.mobile-specs {
+  display: none;
+}
+
 .fineprint {
   font-size: 0.72rem;
   color: rgba(242, 242, 242, 0.4);
@@ -538,9 +542,11 @@ a {
   .body-text {
     max-width: 100%;
   }
-  .pin-label .pin-text {
-    white-space: normal;
-    max-width: 48vw;
+  .pin-labels {
+    display: none;
+  }
+  .mobile-specs {
+    display: block;
   }
   .stat-row {
     gap: 1.4rem;
