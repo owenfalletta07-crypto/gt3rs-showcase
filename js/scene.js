@@ -29,12 +29,17 @@ export function createGT3Scene(canvas) {
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
   camera.position.set(0, 1.1, 5.2);
 
+  // Fill light riding on the camera: negligible on wide shots, lifts the wheel wells on close-ups.
+  camera.add(new THREE.PointLight(0xffffff, 2.2, 0, 2));
+  scene.add(camera);
+
   const carRoot = new THREE.Group();
   scene.add(carRoot);
 
   buildGround(scene);
   buildLights(scene);
   scene.environment = buildStudioEnvironment(renderer);
+  scene.environmentIntensity = 1.4;
 
   const state = {
     paintMaterials: new Set(),
@@ -93,6 +98,8 @@ export function createGT3Scene(canvas) {
           const flap = model.getObjectByName('Wing_Flap_Pivot');
           if (flap) state.wingFlapPivot = flap;
 
+          paintCalipers(model, [213, 0, 28]);
+
           carRoot.add(model);
           state.ready = true;
           resolve(model);
@@ -102,6 +109,53 @@ export function createGT3Scene(canvas) {
         },
         reject
       );
+    });
+  }
+
+  // The caliper texture is a grey palette (the source game paints it at runtime):
+  // recolour its darkest "paintable" texels, leave the hardware texels alone.
+  function paintCalipers(model, rgb) {
+    const done = new Set();
+    model.traverse((obj) => {
+      if (!obj.isMesh || !CALIPER_NAME_RE.test(obj.name)) return;
+      // Vertex colours hold a very dark baked AO: lift it so the caliper reads in the wheel well.
+      const col = obj.geometry.attributes.color;
+      if (col && !obj.geometry.userData.aoLifted) {
+        for (let i = 0; i < col.count; i++) {
+          const v = Math.min(1, 0.35 + col.getX(i) * 1.6);
+          col.setXYZ(i, v, v, v);
+        }
+        col.needsUpdate = true;
+        obj.geometry.userData.aoLifted = true;
+      }
+      const mat = obj.material;
+      if (!mat || done.has(mat) || !mat.map || !mat.map.image) return;
+      done.add(mat);
+      const img = mat.map.image;
+      const c = document.createElement('canvas');
+      c.width = img.width;
+      c.height = img.height;
+      const ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const px = ctx.getImageData(0, 0, c.width, c.height);
+      for (let i = 0; i < px.data.length; i += 4) {
+        if (px.data[i] <= 35) {
+          px.data[i] = rgb[0];
+          px.data[i + 1] = rgb[1];
+          px.data[i + 2] = rgb[2];
+        }
+      }
+      ctx.putImageData(px, 0, 0);
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.flipY = mat.map.flipY;
+      tex.wrapS = mat.map.wrapS;
+      tex.wrapT = mat.map.wrapT;
+      tex.magFilter = THREE.NearestFilter;
+      tex.minFilter = THREE.NearestFilter;
+      tex.generateMipmaps = false;
+      mat.map = tex;
+      mat.needsUpdate = true;
     });
   }
 

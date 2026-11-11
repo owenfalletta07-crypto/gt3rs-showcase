@@ -75,8 +75,24 @@ function tryJoin(prims, label) {
   }
 }
 
+function primCenterZ(prim) {
+  const pos = prim.getAttribute('POSITION');
+  let min = Infinity;
+  let max = -Infinity;
+  const v = [0, 0, 0];
+  for (let i = 0; i < pos.getCount(); i++) {
+    pos.getElement(i, v);
+    if (v[2] < min) min = v[2];
+    if (v[2] > max) max = v[2];
+  }
+  return (min + max) / 2;
+}
+
 const wheelPrims = [];
-const caliperPrims = [];
+// The source stacks both caliper designs on one hub: the larger (front, 6-piston)
+// sits behind the axle (z < 0), the smaller (rear) ahead of it (z > 0).
+const caliperFrontPrims = [];
+const caliperRearPrims = [];
 const otherGroups = new Map();
 const oldNodes = [];
 
@@ -90,7 +106,7 @@ for (const node of scene.listChildren()) {
     if (WHEEL_RE.test(matName)) {
       wheelPrims.push(prim);
     } else if (CALIPER_RE.test(matName)) {
-      caliperPrims.push(prim);
+      (primCenterZ(prim) < 0 ? caliperFrontPrims : caliperRearPrims).push(prim);
     } else {
       if (!otherGroups.has(matName)) otherGroups.set(matName, []);
       otherGroups.get(matName).push(prim);
@@ -98,7 +114,7 @@ for (const node of scene.listChildren()) {
   }
 }
 
-console.log('wheel prims:', wheelPrims.length, 'caliper prims:', caliperPrims.length);
+console.log('wheel prims:', wheelPrims.length, 'caliper prims front/rear:', caliperFrontPrims.length, caliperRearPrims.length);
 
 function addGroupNode(name, prims) {
   const joined = tryJoin(prims, name);
@@ -119,8 +135,8 @@ for (const [matName, prims] of otherGroups) {
 
 const wheelMeshNode = addGroupNode('Wheel_Template', wheelPrims);
 const wheelMesh = wheelMeshNode.getMesh();
-const caliperMeshNode = addGroupNode('Caliper_Template', caliperPrims);
-const caliperMesh = caliperMeshNode.getMesh();
+const caliperFrontNode = addGroupNode('Caliper_Front_Template', caliperFrontPrims);
+const caliperRearNode = addGroupNode('Caliper_Rear_Template', caliperRearPrims);
 
 // Estimated wheel-well centers from body proportions (no node-level position
 // data survived the source export for individual wheel instances).
@@ -146,7 +162,7 @@ for (const c of wheelCorners) {
 
   const cNode = doc
     .createNode(`Caliper_${c.key}`)
-    .setMesh(caliperMesh)
+    .setMesh((c.z === FRONT_Z ? caliperFrontNode : caliperRearNode).getMesh())
     .setTranslation([c.x, HUB_Y, c.z]);
   if (c.mirror) cNode.setScale([-1, 1, 1]);
   scene.addChild(cNode);
@@ -154,7 +170,8 @@ for (const c of wheelCorners) {
 
 for (const node of oldNodes) scene.removeChild(node);
 scene.removeChild(wheelMeshNode);
-scene.removeChild(caliperMeshNode);
+scene.removeChild(caliperFrontNode);
+scene.removeChild(caliperRearNode);
 
 await doc.transform(
   weld({ tolerance: 0.0001 }),
