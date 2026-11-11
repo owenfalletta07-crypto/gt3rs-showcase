@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>911 GT3 RS (992) — Démo fan non officielle</title>
+<meta name="description" content="Démo fan non officielle, scroll cinématique autour de la Porsche 911 GT3 RS (992). Sans lien avec Porsche AG." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="grain" aria-hidden="true"></div>
+
+<div id="preloader">
+  <div class="preloader-inner">
+    <span class="preloader-mark">GT3&nbsp;RS</span>
+    <div class="preloader-bar"><div class="preloader-bar-fill" id="preload-fill"></div></div>
+    <span class="preloader-pct" id="preload-pct">0%</span>
+  </div>
+</div>
+
+<canvas id="webgl"></canvas>
+
+<header id="site-header">
+  <span class="brand">GT3·RS <small>fan demo</small></span>
+  <button id="autoplay-btn" type="button" aria-pressed="false">
+    <span class="dot"></span> Lecture auto
+  </button>
+</header>
+
+<nav id="section-dots" aria-hidden="true"></nav>
+
+<main id="scroll-container">
+
+  <section class="panel" id="hero" data-align="center" data-tag="01 / PROFIL">
+    <div class="panel-inner">
+      <p class="tag">01 / PROFIL</p>
+      <h1 class="giant">GT3&nbsp;RS</h1>
+      <p class="lede mask-lines">
+        <span>Un laboratoire aérodynamique</span>
+        <span>homologué pour la route.</span>
+      </p>
+      <p class="scroll-hint">Scroll ↓</p>
+    </div>
+  </section>
+
+  <section class="panel tall" id="engine" data-align="right" data-tag="02 / MOTEUR">
+    <div class="panel-inner">
+      <p class="tag">02 / MOTEUR</p>
+      <h2 class="headline mask-lines">
+        <span>525&nbsp;ch</span>
+      </h2>
+      <p class="body-text mask-lines">
+        <span>Flat-six 4,0&nbsp;l atmosphérique,</span>
+        <span>9&nbsp;000&nbsp;tr/min. Aucun turbo —</span>
+        <span>que de la réponse.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="panel" id="performance" data-align="left" data-tag="03 / PERFORMANCES">
+    <div class="panel-inner">
+      <p class="tag">03 / PERFORMANCES</p>
+      <h2 class="headline mask-lines"><span>Chaque gramme compte.</span></h2>
+      <div class="stat-row">
+        <div class="stat">
+          <span class="stat-value" data-counter data-to="3.2" data-decimals="1">0.0</span>
+          <span class="stat-unit">s · 0-100&nbsp;km/h</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" data-counter data-to="296" data-decimals="0">0</span>
+          <span class="stat-unit">km/h · V max</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" data-counter data-to="1450" data-decimals="0">0</span>
+          <span class="stat-unit">kg · à vide</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel tall zoom-section" id="brakes" data-align="right" data-tag="04 / FREINS">
+    <div class="panel-inner">
+      <p class="tag">04 / FREINS</p>
+      <h2 class="headline mask-lines"><span>La précision s'arrête net.</span></h2>
+    </div>
+    <div class="pin-labels" id="brake-pins">
+      <div class="pin-label" data-anchor="Caliper_FL">
+        <span class="pin-line"></span>
+        <span class="pin-text">Étrier monobloc aluminium<br />6&nbsp;pistons de 32&nbsp;mm</span>
+      </div>
+      <div class="pin-label" data-anchor="Disc_FL" data-offset="up">
+        <span class="pin-line"></span>
+        <span class="pin-text">Disque 408&nbsp;mm<br />épaisseur 36&nbsp;mm</span>
+      </div>
+      <div class="pin-label" data-anchor="Caliper_RL">
+        <span class="pin-line"></span>
+        <span class="pin-text">Arrière 380&nbsp;mm<br />étrier 4&nbsp;pistons</span>
+      </div>
+      <div class="pin-label" data-anchor="Disc_FL" data-offset="down">
+        <span class="pin-line"></span>
+        <span class="pin-text">Option PCCB : disques céramique composite<br />410&nbsp;/ 390&nbsp;mm</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="wheels" data-align="left" data-tag="05 / ROUES">
+    <div class="panel-inner">
+      <p class="tag">05 / ROUES</p>
+      <h2 class="headline mask-lines"><span>Un seul écrou. Un seul but.</span></h2>
+      <p class="body-text mask-lines">
+        <span>Jantes forgées à écrou central.</span>
+        <span>275/35 R20 à l'avant,</span>
+        <span>335/30 R21 à l'arrière.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="panel tall zoom-section" id="wing" data-align="left" data-tag="06 / AILERON">
+    <div class="panel-inner">
+      <p class="tag">06 / AILERON</p>
+      <h2 class="headline mask-lines"><span>L'appui, visible à l'œil nu.</span></h2>
+    </div>
+    <div class="pin-labels" id="wing-pins">
+      <div class="pin-label big" data-anchor="Wing_Flap">
+        <span class="pin-line"></span>
+        <span class="pin-text"><strong>860&nbsp;kg</strong> d'appui à 285&nbsp;km/h<br /><small>(409&nbsp;kg à 200&nbsp;km/h)</small></span>
+      </div>
+      <div class="pin-label" data-anchor="Wing_StrutL" data-offset="down">
+        <span class="pin-line"></span>
+        <span class="pin-text">Supports en col de cygne —<br />bord supérieur plus haut que le toit</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="aero" data-align="center" data-tag="07 / AÉRODYNAMIQUE">
+    <div class="panel-inner">
+      <p class="tag">07 / AÉRODYNAMIQUE</p>
+      <h2 class="headline mask-lines"><span>Chaque courbe a une raison.</span></h2>
+      <p class="body-text mask-lines">
+        <span>Radiateur central unique à l'avant,</span>
+        <span>ouïes d'extraction sur les ailes.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="panel tall" id="lightweight" data-align="right" data-tag="08 / ALLÈGEMENT">
+    <div class="panel-inner">
+      <p class="tag">08 / ALLÈGEMENT</p>
+      <h2 class="headline mask-lines"><span>Retirer, plutôt qu'ajouter.</span></h2>
+      <ul class="panel-list" id="carbon-list">
+        <li data-part="Carbon_DoorL">Portes</li>
+        <li data-part="Carbon_Hood">Capot avant</li>
+        <li data-part="Carbon_Roof">Toit</li>
+        <li data-part="Carbon_DoorR">Ailes avant</li>
+      </ul>
+      <p class="body-text mask-lines">
+        <span>Pack Weissach : environ 15&nbsp;kg de moins.</span>
+        <span>Jantes magnésium : 8&nbsp;kg de moins.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="panel" id="colors" data-align="left" data-tag="09 / COULEURS">
+    <div class="panel-inner">
+      <p class="tag">09 / COULEURS</p>
+      <h2 class="headline mask-lines"><span>Une signature, plusieurs teintes.</span></h2>
+      <div class="swatch-group">
+        <p class="swatch-label">Carrosserie</p>
+        <div class="swatches" id="paint-swatches">
+          <button class="swatch" style="--sw:#F2F2F2" data-color="#f2f2f2" data-name="Blanc Carrare" aria-label="Blanc Carrare"></button>
+          <button class="swatch" style="--sw:#0b0b0d" data-color="#0b0b0d" data-name="Noir Intense" aria-label="Noir Intense"></button>
+          <button class="swatch" style="--sw:#8a8f92" data-color="#8a8f92" data-name="Gris GT métallisé" aria-label="Gris GT métallisé"></button>
+          <button class="swatch" style="--sw:#2e5b3e" data-color="#2e5b3e" data-name="Vert Python" aria-label="Vert Python"></button>
+          <button class="swatch" style="--sw:#13385c" data-color="#13385c" data-name="Bleu Shark" aria-label="Bleu Shark"></button>
+          <button class="swatch" style="--sw:#d5001c" data-color="#d5001c" data-name="Rouge Indien" aria-label="Rouge Indien"></button>
+        </div>
+        <p class="swatch-current" id="paint-current">Blanc Carrare</p>
+      </div>
+      <div class="swatch-group">
+        <p class="swatch-label">Jantes</p>
+        <div class="swatches" id="rim-swatches">
+          <button class="swatch sm" style="--sw:#1b1b1b" data-color="#1b1b1b" data-name="Noir satiné" aria-label="Noir satiné"></button>
+          <button class="swatch sm" style="--sw:#c9ccce" data-color="#c9ccce" data-name="Argent" aria-label="Argent"></button>
+          <button class="swatch sm" style="--sw:#d5001c" data-color="#d5001c" data-name="Rouge" aria-label="Rouge"></button>
+        </div>
+      </div>
+      <p class="fineprint">Teintes indicatives — à confirmer sur le configurateur officiel.</p>
+    </div>
+  </section>
+
+  <section class="panel tall" id="specs" data-align="center" data-tag="10 / FICHE TECHNIQUE">
+    <div class="panel-inner wide">
+      <p class="tag">10 / FICHE TECHNIQUE</p>
+      <h2 class="headline mask-lines"><span>Fiche technique</span></h2>
+      <table class="specs-table" id="specs-table">
+        <tbody>
+          <tr><th>Puissance</th><td>525&nbsp;ch</td></tr>
+          <tr><th>Moteur</th><td>Flat-six 4,0&nbsp;l atmosphérique</td></tr>
+          <tr><th>0–100&nbsp;km/h</th><td>3,2&nbsp;s</td></tr>
+          <tr><th>Vitesse maximale</th><td>296&nbsp;km/h</td></tr>
+          <tr><th>Poids à vide</th><td>1&nbsp;450&nbsp;kg</td></tr>
+          <tr><th>Boîte</th><td>PDK 7 rapports</td></tr>
+          <tr><th>Consommation</th><td>13,2&nbsp;l/100&nbsp;km</td></tr>
+          <tr><th>CO₂</th><td>299&nbsp;g/km</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="final" data-align="center" data-tag="11 / FINAL">
+    <div class="panel-inner">
+      <p class="tag">11 / FINAL</p>
+      <h2 class="giant">GT3&nbsp;RS</h2>
+      <p class="lede mask-lines">
+        <span>Conçue pour le chrono.</span>
+        <span>Homologuée pour la route.</span>
+      </p>
+      <a class="cta" href="https://www.porsche.com/international/models/911/911-gt3-rs/911-gt3-rs/" target="_blank" rel="noopener">
+        Découvrir sur porsche.com
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer id="site-footer">
+  <p>Projet de démonstration non officiel, sans lien avec Porsche AG.</p>
+  <p class="credit">Modèle 3D placeholder — à remplacer par le modèle définitif.</p>
+</footer>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.min.js"
+  }
+}
+</script>
+<script src="vendor/gsap/gsap.min.js"></script>
+<script src="vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis/lenis.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
