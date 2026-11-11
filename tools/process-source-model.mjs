@@ -125,8 +125,8 @@ const caliperMesh = caliperMeshNode.getMesh();
 // Estimated wheel-well centers from body proportions (no node-level position
 // data survived the source export for individual wheel instances).
 const TRACK_X = 0.91;
-const FRONT_Z = -1.14;
-const REAR_Z = 1.25;
+const FRONT_Z = 1.25;
+const REAR_Z = -1.14;
 const HUB_Y = 0.365;
 
 const wheelCorners = [

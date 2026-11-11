@@ -12,8 +12,8 @@ const TIRE_NAME_RE = /tire|tyre|pneu|rubber/i;
 const WHEEL_GROUP_RE = /^wheel_/i;
 
 const FALLBACK_ANCHORS = [
-  { name: 'Wing_Flap', near: null, pos: [0, 1.3, 1.0] },
-  { name: 'Wing_StrutL', near: null, pos: [0.18, 1.12, 0.65] },
+  { name: 'Wing_Flap', near: null, pos: [0, 1.3, -1.0] },
+  { name: 'Wing_StrutL', near: null, pos: [0.18, 1.12, -0.65] },
   { name: 'Disc_FL', near: 'Caliper_FL', pos: [0, 0, 0] },
 ];
 

@@ -3,19 +3,19 @@ import { createGT3Scene } from './scene.js';
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Car convention: X = width (left/right), Z = length (- front / + rear), Y = height.
+// Car convention: X = width (left/right), Z = length (+ front / - rear), Y = height.
 const SECTIONS = [
-  { id: 'hero', pos: [5.8, 1.25, 0.5], look: [0, 0.78, -0.1] },
-  { id: 'engine', pos: [2.6, 1.3, 4.2], look: [0, 0.85, 1.6] },
-  { id: 'performance', pos: [2.8, 1.15, -3.6], look: [0, 0.65, -1.3] },
-  { id: 'brakes', pos: [-1.75, 0.52, -1.85], look: [-0.91, 0.4, -1.14] },
-  { id: 'wheels', pos: [-2.35, 0.95, -2.3], look: [-0.5, 0.5, -0.9] },
-  { id: 'wing', pos: [0.6, 2.15, 4.6], look: [0.1, 1.2, 1.4] },
+  { id: 'hero', pos: [6.8, 1.35, -0.6], look: [0, 0.75, 0.1] },
+  { id: 'engine', pos: [2.6, 1.3, -4.2], look: [0, 0.85, -1.6] },
+  { id: 'performance', pos: [2.8, 1.15, 3.6], look: [0, 0.65, 1.3] },
+  { id: 'brakes', pos: [-1.75, 0.52, 1.85], look: [-0.91, 0.4, 1.14] },
+  { id: 'wheels', pos: [-2.35, 0.95, 2.3], look: [-0.5, 0.5, 0.9] },
+  { id: 'wing', pos: [0.6, 2.15, -4.6], look: [0.1, 1.2, -1.4] },
   { id: 'aero', pos: [0.05, 4.6, 0.0], look: [0, 0, 0] },
-  { id: 'lightweight', pos: [3.2, 1.35, 1.0], look: [0.3, 0.8, 0.2] },
-  { id: 'colors', pos: [3.4, 1.1, -1.0], look: [0.1, 0.7, -0.3] },
-  { id: 'specs', pos: [5.8, 1.5, 1.2], look: [0.1, 0.78, 0.2] },
-  { id: 'final', pos: [5.8, 1.25, 0.5], look: [0, 0.78, -0.1] },
+  { id: 'lightweight', pos: [3.2, 1.35, -1.0], look: [0.3, 0.8, -0.2] },
+  { id: 'colors', pos: [3.4, 1.1, 1.0], look: [0.1, 0.7, 0.3] },
+  { id: 'specs', pos: [5.8, 1.5, -1.2], look: [0.1, 0.78, -0.2] },
+  { id: 'final', pos: [6.8, 1.35, -0.6], look: [0, 0.75, 0.1] },
 ];
 
 const canvas = document.getElementById('webgl');
