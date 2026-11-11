@@ -192,18 +192,14 @@ function setupPinLabels(containerId, sectionId) {
 
 function setupMaskReveal() {
   const targets = document.querySelectorAll('.mask-lines');
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-  targets.forEach((el) => io.observe(el));
+  targets.forEach((el) => {
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 92%',
+      once: true,
+      onEnter: () => el.classList.add('in-view'),
+    });
+  });
 }
 
 function setupCounters() {
