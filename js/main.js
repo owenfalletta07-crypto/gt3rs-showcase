@@ -201,7 +201,7 @@ function setupMaskReveal() {
         }
       });
     },
-    { threshold: 0.35 }
+    { threshold: 0.1 }
   );
   targets.forEach((el) => io.observe(el));
 }
